@@ -6,7 +6,7 @@ const iconMap = { Github, Linkedin, Facebook, Mail };
 const Contact = ({ contactLinks }) => (
   <div className="space-y-12 pb-12">
     <FadeInSection type="slide-up">
-      <div className="text-center max-w-2xl mx-auto space-y-6">
+      <div className="text-center max-w-4xl mx-auto space-y-6">
         <div className="space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white">Let's Connect</h2>
           <p className="text-zinc-400 text-lg">
@@ -33,7 +33,7 @@ const Contact = ({ contactLinks }) => (
       </div>
     </FadeInSection>
 
-    <div className="max-w-2xl mx-auto w-full pt-4">
+    <div className="max-w-4xl mx-auto w-full pt-4">
       <FadeInSection type="slide-up" delay={200}>
         <div className="space-y-6 bg-zinc-900/40 p-6 md:p-8 rounded-2xl border border-zinc-800/50 shadow-lg">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
