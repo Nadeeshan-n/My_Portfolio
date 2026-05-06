@@ -1,6 +1,5 @@
 import FadeInSection from '../components/FadeInSection';
 import CodeTerminal from '../components/CodeTerminal';
-import { Github, Linkedin, Mail } from '../components/icons/Icons';
 
 const Home = ({ scrollToSection }) => (
   <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
@@ -22,22 +21,6 @@ const Home = ({ scrollToSection }) => (
             I build scalable systems and craft high-performance digital experiences.
             Currently focusing on DevOps, distributed systems, and modern web architectures.
           </p>
-        </div>
-      </FadeInSection>
-
-      <FadeInSection type="slide-up" delay={200}>
-        <div className="flex flex-wrap gap-4 pt-4">
-          <div className="flex items-center gap-3">
-            <a href="#" className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all">
-              <Github size={20} />
-            </a>
-            <a href="#" className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all">
-              <Linkedin size={20} />
-            </a>
-            <a href="#" className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all">
-              <Mail size={20} />
-            </a>
-          </div>
         </div>
       </FadeInSection>
     </div>
