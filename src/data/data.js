@@ -109,6 +109,6 @@ export const allSkills = [
 export const contactLinks = [
   { platform: "GitHub",   handle: "https://github.com/Nadeeshan-n",          link: "https://github.com/Nadeeshan-n",                        icon: "Github" },
   { platform: "LinkedIn", handle: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",     link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",                        icon: "Linkedin" },
-  { platform: "Facebook", handle: "https://www.facebook.com/nadeeshan.nadeera.5",        link: "https://www.facebook.com/nadeeshan.nadeera.5q",                        icon: "Facebook" },
+  { platform: "Facebook", handle: "https://www.facebook.com/nadeeshan.nadeera.5",        link: "https://www.facebook.com/nadeeshan.nadeera.5",                        icon: "Facebook" },
   { platform: "Email",    handle: "nadeeshannadeera14@gmail.com",             link: "mailto:nadeeshannadeera14@gmail.com", icon: "Mail" },
 ];
