@@ -13,7 +13,7 @@ const ProjectDetailsPage = ({ project, onBack }) => {
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[150px] rounded-full"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-12">
+      <div className="w-full max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-20 pt-12">
         {/* Breadcrumb */}
         <nav className="flex items-center text-sm font-medium mb-12">
           <button

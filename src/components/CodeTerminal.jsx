@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const codeSnippets = [
+  "Hello, I'm Nadeeshan Nadeera.",
+  "print('Developer | ICT Enthusiast | Problem Solver')",
   "const buildSystem = () => {\n  return 'Scalable';\n};",
   "docker run -d \\\n  -p 8080:80 \\\n  microservice:latest",
   "git commit -m \\\n  'Fix availability \\n  paradox'",
@@ -41,7 +43,7 @@ const CodeTerminal = () => {
   }, [text, isDeleting, loopNum, typingSpeed]);
 
   return (
-    <div className="w-full aspect-square max-w-sm mx-auto lg:ml-auto bg-[#0a0a0a] rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden">
+    <div className="w-full max-w-xl mx-auto lg:ml-auto bg-[#0a0a0a] rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden min-h-[280px]">
       {/* Title bar */}
       <div className="flex items-center px-4 py-3 bg-zinc-900/80 border-b border-zinc-800/50 gap-2">
         <div className="w-3 h-3 rounded-full bg-red-500/80"></div>

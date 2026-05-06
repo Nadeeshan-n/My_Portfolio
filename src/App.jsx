@@ -82,7 +82,7 @@ const App = () => {
       </nav>
 
       {/* Sections */}
-      <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <main className="w-full max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-20 pt-32 pb-24">
         <section id="home"      className="scroll-mt-32"><Home      scrollToSection={scrollToSection} /></section>
         <SectionDivider />
         <section id="about"     className="scroll-mt-32"><About     projectList={projectList} educationList={educationList} /></section>
@@ -97,7 +97,7 @@ const App = () => {
       </main>
 
       {/* Footer */}
-      <footer className="max-w-5xl mx-auto px-6 pb-12 border-t border-zinc-900 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="w-full max-w-screen-2xl mx-auto px-6 sm:px-10 lg:px-20 pb-12 border-t border-zinc-900 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-zinc-600 text-sm">© 2026 nadeeShan_n.</div>
         <div className="flex items-center gap-6 text-zinc-500 text-sm">
           <a href="#" className="hover:text-white transition-colors">Resume</a>

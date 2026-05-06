@@ -1,6 +1,7 @@
 import FadeInSection from '../components/FadeInSection';
 import AnimatedCounter from '../components/AnimatedCounter';
 import { Code2, Award, ArrowUpRight } from '../components/icons/Icons';
+import profileImg from '../sources/profile.png';
 
 const About = ({ projectList, educationList }) => {
   const stats = [
@@ -31,9 +32,9 @@ const About = ({ projectList, educationList }) => {
                 passion for building the systems that power it.
               </p>
               <p>
-                Currently in my second year, I balance academic excellence with hands-on projects,
-                focusing on the "Availability Paradox" and how modern DevOps can bridge the gap
-                between development speed and system stability.
+                I’m focused on building strong skills in programming with Python, Java, C, and C#, along with web technologies like HTML and CSS. 
+                I also have an interest in Linux and software engineering concepts, especially object-oriented programming (OOP).
+                I’m passionate about continuous self-learning and currently exploring AI agents and agentic workflows to expand my knowledge in emerging technologies.
               </p>
               <p>
                 When I'm not in front of a terminal, you can find me exploring nature, practicing
@@ -46,7 +47,7 @@ const About = ({ projectList, educationList }) => {
         <FadeInSection type="from-right" delay={300}>
           <div className="relative group flex justify-center items-center">
             <img
-              src="https://cdni.iconscout.com/illustration/premium/thumb/coder-3462295-2895977.png"
+              src={profileImg}
               alt="Profile Illustration"
               className="w-full max-w-sm h-auto object-contain drop-shadow-[0_0_30px_rgba(99,102,241,0.2)] group-hover:drop-shadow-[0_0_60px_rgba(99,102,241,0.5)] group-hover:-translate-y-2 transition-all duration-700 ease-out"
             />
