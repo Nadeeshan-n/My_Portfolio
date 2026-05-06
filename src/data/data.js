@@ -63,22 +63,24 @@ export const projectList = [
 
 export const educationList = [
   {
-    degree: "BSc (Hons) in Information and Communication Technology",
-    institution: "University of Technology",
+    degree: "Bachelor of Information and Communication Technology",
+    institutionLink:"https://tech.sjp.ac.lk/",
+    institution: "University of Sri Jayewardenepura, Sri Lanka",
     period: "2024 - Present",
     description:
       "Focusing on Software Engineering, DevOps, and scalable distributed systems. Maintaining a strong academic record while actively participating in tech communities.",
     image:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=1200&h=800",
+      "https://www.buhave.com/guide/wp-content/uploads/2025/05/University-of-Sri-Jayewardenepura.webp",
   },
   {
-    degree: "Advanced Level Examination",
-    institution: "High School of Science",
-    period: "2021 - 2023",
+    degree: "Linx Commands and Shell Scripting Certification",
+    institution: "Completed: Hands-on Introduction to Linux Commands and Shell Scripting on Coursera.",
+    institutionLink:"https://www.coursera.org/account/accomplishments/verify/Y4M0EXWL5LZS?utm_source=ln&utm_medium=certificate&utm_content=cert_image&utm_campaign=pdf_header_button&utm_product=course",
+    period: "2026",
     description:
       "Physical Science stream with a strong emphasis on Mathematics and Physics, providing a solid foundation for computational logic.",
     image:
-      "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=1200&h=800",
+      "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS.jpeg",
   },
 ];
 

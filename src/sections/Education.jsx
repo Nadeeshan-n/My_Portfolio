@@ -21,7 +21,20 @@ const Education = ({ educationList }) => {
                     <h3 className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
                       {item.degree}
                     </h3>
-                    <div className="text-indigo-400/80 font-medium mt-1">{item.institution}</div>
+                    <div className="text-indigo-400/80 font-medium mt-1">
+                      {item.institutionLink ? (
+                        <a
+                          href={item.institutionLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-indigo-300 underline underline-offset-2 transition-colors"
+                        >
+                          {item.institution}
+                        </a>
+                      ) : (
+                        item.institution
+                      )}
+                    </div>
                   </div>
                   <div className="px-4 py-1.5 bg-zinc-800 text-zinc-300 text-sm font-medium rounded-full w-fit border border-zinc-700/50 flex-shrink-0 xl:self-start">
                     {item.period}
@@ -31,20 +44,22 @@ const Education = ({ educationList }) => {
               </div>
 
               {/* Clickable image */}
-              <div
-                onClick={() => setSelectedImage(item.image)}
-                className="w-full md:w-56 aspect-[4/3] flex-shrink-0 rounded-xl overflow-hidden bg-zinc-800 border border-zinc-700/50 group-hover:border-indigo-500/50 transition-colors cursor-pointer relative group/img shadow-md"
-              >
-                <img
-                  src={item.image}
-                  alt={`${item.institution} Reference`}
-                  className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500 ease-out opacity-80 group-hover/img:opacity-100"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[2px]">
-                  <ZoomIn className="text-white mb-2" size={24} />
-                  <span className="text-white text-[10px] font-bold tracking-wider uppercase">View Reference</span>
+              {item.image && (
+                <div
+                  onClick={() => setSelectedImage(item.image)}
+                  className="w-full md:w-56 aspect-[4/3] flex-shrink-0 rounded-xl overflow-hidden bg-zinc-800 border border-zinc-700/50 group-hover:border-indigo-500/50 transition-colors cursor-pointer relative group/img shadow-md"
+                >
+                  <img
+                    src={item.image}
+                    alt={`${item.institution} Reference`}
+                    className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500 ease-out opacity-80 group-hover/img:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[2px]">
+                    <ZoomIn className="text-white mb-2" size={24} />
+                    <span className="text-white text-[10px] font-bold tracking-wider uppercase">View Reference</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </FadeInSection>
         ))}
