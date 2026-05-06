@@ -86,22 +86,29 @@ export const educationList = [
 
 export const allSkills = [
   { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+  //{ name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   { name: "React",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "Next.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+  //{ name: "Next.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
   { name: "Python",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "Node.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-  { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  //{ name: "Node.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+  //{ name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Docker",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
   { name: "Git",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-  { name: "Tailwind",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-  { name: "AWS",        logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
+  //{ name: "Tailwind",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+  //{ name: "AWS",        logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
   { name: "Linux",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
+  { name: "C",         logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+  { name: "Java",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { name: "C#",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+  { name: "SQL",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "HTML",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+  { name: "CSS",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+
 ];
 
 export const contactLinks = [
-  { platform: "GitHub",   handle: "github.com/nadeeShan",          link: "#",                        icon: "Github" },
-  { platform: "LinkedIn", handle: "linkedin.com/in/nadeeShan",     link: "#",                        icon: "Linkedin" },
-  { platform: "Facebook", handle: "facebook.com/nadeeShan",        link: "#",                        icon: "Facebook" },
-  { platform: "Email",    handle: "hello@example.com",             link: "mailto:hello@example.com", icon: "Mail" },
+  { platform: "GitHub",   handle: "https://github.com/Nadeeshan-n",          link: "https://github.com/Nadeeshan-n",                        icon: "Github" },
+  { platform: "LinkedIn", handle: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",     link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",                        icon: "Linkedin" },
+  { platform: "Facebook", handle: "https://www.facebook.com/nadeeshan.nadeera.5",        link: "https://www.facebook.com/nadeeshan.nadeera.5q",                        icon: "Facebook" },
+  { platform: "Email",    handle: "nadeeshannadeera14@gmail.com",             link: "mailto:nadeeshannadeera14@gmail.com", icon: "Mail" },
 ];
