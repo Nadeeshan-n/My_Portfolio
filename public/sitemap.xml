@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
     <loc>https://nadeeshan.pages.dev/</loc>
-  </url>
-
-  <url>
-    <loc>https://nadeeshan.pages.dev/#about</loc>
-  </url>
-
-  <url>
-    <loc>https://nadeeshan.pages.dev/#projects</loc>
-  </url>
-
-  <url>
-    <loc>https://nadeeshan.pages.dev/#skills</loc>
-  </url>
-
-  <url>
-    <loc>https://nadeeshan.pages.dev/#education</loc>
-  </url>
-
-  <url>
-    <loc>https://nadeeshan.pages.dev/#contact</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
 
 </urlset>
