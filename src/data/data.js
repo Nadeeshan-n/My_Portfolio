@@ -1,23 +1,22 @@
+import weatherImg from '../assets/weather.jpg';
+
 export const projectList = [
   {
-    title: "Distributed Task Scheduler",
-    desc: "A high-concurrency scheduling system built with Go and Redis for handling million+ tasks.",
-    fullDescription:
-      "A robust, highly concurrent task scheduling system engineered to process millions of background jobs with minimal latency. It leverages Go's powerful goroutines for concurrent execution and Redis for fast, reliable queue management.",
+    title: "Weather Forecast Accuracy Project",
+    desc: "I built a Weather Forecast Accuracy System using Linux and Bash scripting for my course assignment.",
+    fullDescription:"This project involved building a system to evaluate the accuracy of weather forecasts by comparing predicted data with actual weather conditions. I utilized Linux command-line tools and Bash scripting to automate the data collection, processing, and analysis. The system collected real-time weather data from APIs, logged historical temperature data, calculated forecast accuracy automatically, and generated weekly statistics for analysis.",
     role: "Backend Lead & System Architect",
     contributionType: "Individual Project",
-    technologies: ["Go", "Redis", "Docker", "DevOps"],
+    technologies: ["Bash", "Linux", "Curl", "Text processing tools (grep, awk, cut)"],
     keyFeatures: [
-      "Highly concurrent task execution using goroutines",
-      "Reliable queue management via Redis",
-      "Automatic retries for failed or dropped tasks",
-      "Comprehensive dead-letter queue system",
-      "Real-time monitoring and logging interface",
+      "Collected real-time weather data using APIs",
+      "Logged historical temperature data",
+      "Calculated forecast accuracy automatically",
+      "Generated weekly statistics for analysis",
     ],
     link: "#",
-    githubLink: "https://github.com/nadeeShan",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+    githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
+    image: weatherImg,
   },
   {
     title: "Expense Tracker Pro",
@@ -64,7 +63,7 @@ export const projectList = [
 export const educationList = [
   {
     degree: "Bachelor of Information and Communication Technology",
-    institutionLink:"https://tech.sjp.ac.lk/",
+    institutionLink: "https://tech.sjp.ac.lk/",
     institution: "University of Sri Jayewardenepura, Sri Lanka",
     period: "2024 - Present",
     description:
@@ -75,7 +74,7 @@ export const educationList = [
   {
     degree: "Linx Commands and Shell Scripting Certification",
     institution: "Completed: Hands-on Introduction to Linux Commands and Shell Scripting on Coursera.",
-    institutionLink:"https://www.coursera.org/account/accomplishments/verify/Y4M0EXWL5LZS?utm_source=ln&utm_medium=certificate&utm_content=cert_image&utm_campaign=pdf_header_button&utm_product=course",
+    institutionLink: "https://www.coursera.org/account/accomplishments/verify/Y4M0EXWL5LZS?utm_source=ln&utm_medium=certificate&utm_content=cert_image&utm_campaign=pdf_header_button&utm_product=course",
     period: "2026",
     description:
       "Physical Science stream with a strong emphasis on Mathematics and Physics, providing a solid foundation for computational logic.",
@@ -97,18 +96,17 @@ export const allSkills = [
   //{ name: "Tailwind",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
   //{ name: "AWS",        logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
   { name: "Linux",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-  { name: "C",         logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-  { name: "Java",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-  { name: "C#",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
-  { name: "SQL",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "HTML",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-
+  { name: "C",          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+  { name: "Java",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { name: "C#",         logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+  { name: "SQL",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "HTML",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+  { name: "CSS",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
 ];
 
 export const contactLinks = [
-  { platform: "GitHub",   handle: "https://github.com/Nadeeshan-n",          link: "https://github.com/Nadeeshan-n",                        icon: "Github" },
-  { platform: "LinkedIn", handle: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",     link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",                        icon: "Linkedin" },
-  { platform: "Facebook", handle: "https://www.facebook.com/nadeeshan.nadeera.5",        link: "https://www.facebook.com/nadeeshan.nadeera.5",                        icon: "Facebook" },
-  { platform: "Email",    handle: "nadeeshannadeera14@gmail.com",             link: "mailto:nadeeshannadeera14@gmail.com", icon: "Mail" },
+  { platform: "GitHub",   handle: "github.com/Nadeeshan-n",               link: "https://github.com/Nadeeshan-n",                                         icon: "Github"   },
+  { platform: "LinkedIn", handle: "linkedin.com/in/nadeeshan-nadeera",     link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",                icon: "Linkedin" },
+  { platform: "Facebook", handle: "facebook.com/nadeeshan.nadeera.5",      link: "https://www.facebook.com/nadeeshan.nadeera.5",                            icon: "Facebook" },
+  { platform: "Email",    handle: "nadeeshannadeera14@gmail.com",           link: "mailto:nadeeshannadeera14@gmail.com",                                     icon: "Mail"     },
 ];
