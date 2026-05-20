@@ -1,4 +1,5 @@
 import weatherImg from '../assets/weather.jpg';
+import driveSmartImg from '../assets/drive_smart.png';
 
 export const projectList = [
   {
@@ -39,27 +40,27 @@ export const projectList = [
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
   },
   {
-    title: "Observability Dashboard",
-    desc: "Custom monitoring tool integrated with OpenTelemetry to track microservice health.",
+    title: "Drive Smart - Car Rental Management System",
+    desc: "This system is designed mainly for company-side management, where staff members handle vehicle rentals, customer information, and rental records through a local interface.",
     fullDescription:
-      "A custom-built observability platform designed to monitor the health, performance, and distributed traces of microservices. By integrating with OpenTelemetry, it provides real-time metrics, logs, and trace visualization to ensure high system availability.",
-    role: "DevOps Engineer",
-    contributionType: "Open Source Contribution",
-    technologies: ["TypeScript", "Next.js", "AWS", "Grafana"],
+      "Drive Smart is a car rental management system built with Java and csv File Systems, designed to streamline the rental process for both customers and staff. The system allows customers to browse available vehicles, make reservations, and manage their bookings through a user friendly interface. On the company side, staff members can efficiently handle vehicle rentals, customer information, and rental records through a local interface.",
+    //role: "",
+    contributionType: "Group Project",
+    technologies: ["Java", "File Handling", "Java Collections & Generics"],
     keyFeatures: [
-      "Distributed tracing across multiple microservices",
-      "Real-time alerts based on custom metric thresholds",
-      "Interactive, customizable dashboard grids",
-      "Automated log aggregation and indexing",
-      "Seamless AWS infrastructure integration",
+      "Vehicle registration and management",
+      "Customer registration and management",
+      "Rental booking and return handling",
+      "Vehicle availability tracking",
+      "Rental record management",
+      "Exception handling for safer operations",
     ],
     link: "#",
-    githubLink: "https://github.com/nadeeShan",
-    image:
-      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=800",
+    githubLink: "https://github.com/Nadeeshan-n/Drive-Smart-System",
+    image:driveSmartImg,
   },
 ];
-
+// Under all abouts are the education details, including degree, institution, period, description, and an image representing the institution or certification.
 export const educationList = [
   {
     degree: "Bachelor of Information and Communication Technology",
@@ -82,7 +83,7 @@ export const educationList = [
       "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS.jpeg",
   },
 ];
-
+// The skills array contains objects representing each skill, including the skill name and a URL to its logo for visual representation in the Skills section.
 export const allSkills = [
   { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
   //{ name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
