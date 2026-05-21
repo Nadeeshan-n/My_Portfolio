@@ -33,7 +33,7 @@ const About = ({ projectList, educationList }) => {
               </p>
               <p>
                 I’m focused on building strong skills in programming with Python, Java, C, and C#, along with web technologies like HTML and CSS. 
-                I also have an interest in Linux and software engineering concepts, especially object-oriented programming (OOP).
+                
                 I’m passionate about continuous self-learning and currently exploring AI agents and agentic workflows to expand my knowledge in emerging technologies.
               </p>
               <p>

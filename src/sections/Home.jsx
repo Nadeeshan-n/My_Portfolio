@@ -18,8 +18,8 @@ const Home = ({ scrollToSection }) => (
             <span className="text-zinc-500">& ICT Enthusiast.</span>
           </h1>
           <p className="max-w-xl text-lg text-zinc-400 leading-relaxed">
-            I build scalable systems and craft high-performance digital experiences.
-            Currently focusing on DevOps, distributed systems, and modern web architectures.
+            I build scalable systems and craft  digital experiences.
+            Currently focusing on modern Software Engineering Technologies.
           </p>
         </div>
       </FadeInSection>
