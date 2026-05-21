@@ -19,7 +19,7 @@ export const projectList = [
     githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
     image: weatherImg,
   },
-  {
+  /*{
     title: "Expense Tracker Pro",
     desc: "Full-stack finance management app with real-time data visualization and recurring cost analysis.",
     fullDescription:
@@ -38,7 +38,7 @@ export const projectList = [
     githubLink: "https://github.com/nadeeShan",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-  },
+  },*/
   {
     title: "Drive Smart - Car Rental Management System",
     desc: "This system is designed mainly for company-side management, where staff members handle vehicle rentals, customer information, and rental records through a local interface.",
