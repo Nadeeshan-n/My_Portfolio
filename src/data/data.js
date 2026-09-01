@@ -1,12 +1,13 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
+import aiAgentImg from '../assets/AI-Agent/AI-Agent.png';
 
 export const projectList = [
   {
     title: "Weather Forecast Accuracy Project",
     desc: "I built a Weather Forecast Accuracy System using Linux and Bash scripting for my course assignment.",
-    fullDescription:"This project involved building a system to evaluate the accuracy of weather forecasts by comparing predicted data with actual weather conditions. I utilized Linux command-line tools and Bash scripting to automate the data collection, processing, and analysis. The system collected real-time weather data from APIs, logged historical temperature data, calculated forecast accuracy automatically, and generated weekly statistics for analysis.",
-    role: "Backend Lead & System Architect",
+    fullDescription:"This project involved building a system to evaluate the accuracy of weather forecasts by comparing predicted data with actual weather conditions. I utilized Linux command-line tools and Bash scripting to automate the data collection, processing, and analysis. The system collected real-time weather data from APIs, logged historical temperature data, calculated forecast accuracy automatically, and generated weekly statistics for analysis.The project connects a self-hosted n8n workflow (running in Docker, tunneled via ngrok) to a WhatsApp interface, orchestrating conversation flow, memory retrieval, and AI response generation, backed by a FastAPI memory service and SQLite for persistence. It cleanly separates short-term conversation history from long-term structured memory, and combines semantic similarity with importance and confidence scores to decide which memories are actually relevant enough to inject into the agent's context.",
+    //role: "Backend Lead & System Architect",
     contributionType: "Individual Project",
     technologies: ["Bash", "Linux", "Curl", "Text processing tools (grep, awk, cut)"],
     keyFeatures: [
@@ -19,26 +20,30 @@ export const projectList = [
     githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
     image: weatherImg,
   },
-  /*{
-    title: "Expense Tracker Pro",
-    desc: "Full-stack finance management app with real-time data visualization and recurring cost analysis.",
+  {
+    title: "AI-Agent Memory System",
+    desc: "Structured long-term memory system for an AI agent using FastAPI, SQLite, embeddings, and n8n.",
     fullDescription:
-      "A comprehensive financial management application designed to help users track expenses, analyze spending habits, and manage recurring costs. The app features real-time data visualization using dynamic charts and secure user authentication.",
-    role: "Full Stack Developer",
-    contributionType: "Group Project",
-    technologies: ["React", "Node.js", "PostgreSQL", "Tailwind"],
+      "AI Agent Memory System is a structured, long-term memory architecture built for conversational AI agents, designed so an agent can retain and recall meaningful information about a user across multiple conversations instead of starting fresh every time. Rather than treating memory as raw conversation text, the system models each memory as a structured record — with fields like category, key, value, importance, confidence, and embedding — enabling reliable creation, updating, deletion, semantic retrieval, and expiration of memories.",
+    contributionType: "Individual Project",
+    technologies: ["Python", "FastAPI", "Pydantic", "SQLite", "Hugging Face", "Operouter API", "n8n", "Docker", "ngrok", "NumPy", "WhatsApp"],
     keyFeatures: [
-      "Real-time spending analysis and dynamic charts",
-      "Secure user authentication (JWT/OAuth)",
-      "Automated recurring cost detection",
-      "Export reports in PDF and CSV formats",
-      "Responsive, mobile-first design system",
+      "Structured memory model — each memory stored with category, key, value, source, importance, confidence, embedding, memory type, and timestamps (not raw text)",
+      "Semantic retrieval — embeddings (Hugging Face) + cosine similarity (NumPy) surface memories by meaning, not exact keyword match",
+      "Relevance scoring — combines similarity × importance × confidence, so low-quality matches don't get injected into context",
+      "Full memory lifecycle — extraction → validation → create/update/delete → storage → retrieval → expiration → cleanup",
+      "CRUD-based memory actions — CREATE, UPDATE, DELETE with duplicate detection to avoid redundant records",
+      "Temporary vs. long-term memory — supports expiring memories that are automatically filtered out once expired",
+      "Separation of conversation history and long-term memory — recent chat context and durable user facts are handled as two distinct systems",
+      "Retrieval filtering — similarity thresholds, expiration, ownership, and embedding validity checks reduce irrelevant context and token usage",
+      "FastAPI memory service — REST API layer handling all memory CRUD, scoring, and conversation storage, decoupled from the agent workflow",
+      "n8n + Docker + ngrok pipeline — self-hosted workflow orchestration containerized in Docker, exposed via ngrok for WhatsApp webhook integration",
+      "Fault-tolerant retrieval — invalid/corrupted embeddings are skipped rather than breaking the whole retrieval process"
     ],
     link: "#",
-    githubLink: "https://github.com/nadeeShan",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-  },*/
+    githubLink: "https://github.com/Nadeeshan-n/ai-agent-memory-system",
+    image: aiAgentImg,
+  },
   {
     title: "Drive Smart - Car Rental Management System",
     desc: "This system is designed mainly for company-side management, where staff members handle vehicle rentals, customer information, and rental records through a local interface.",
