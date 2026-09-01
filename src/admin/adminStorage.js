@@ -9,6 +9,11 @@ export const getAdminDraft = () => {
   }
 };
 
+export const getLiveData = (fallback) => {
+  const draft = getAdminDraft();
+  return draft ? { ...fallback, ...draft } : fallback;
+};
+
 export const saveAdminDraft = (data) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 };

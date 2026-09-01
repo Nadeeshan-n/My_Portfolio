@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
-import { projectList, educationList, contactLinks } from './data/data';
+import { projectList as staticProjectList, educationList as staticEducationList, allSkills as staticAllSkills, contactLinks as staticContactLinks } from './data/data';
+import { getLiveData } from './admin/adminStorage';
 import { HomeIcon, User, Briefcase, Code2, GraduationCap, Mail } from './components/icons/Icons';
 
 import SectionDivider from './components/SectionDivider';
@@ -25,6 +26,17 @@ const navItems = [
 const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
+
+  const { projectList, educationList, contactLinks } = useMemo(
+    () =>
+      getLiveData({
+        projectList: staticProjectList,
+        educationList: staticEducationList,
+        allSkills: staticAllSkills,
+        contactLinks: staticContactLinks,
+      }),
+    []
+  );
 
   useEffect(() => {
     if (selectedProject) return;

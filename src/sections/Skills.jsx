@@ -1,5 +1,8 @@
 import FadeInSection from '../components/FadeInSection';
-import { allSkills } from '../data/data';
+import { allSkills as staticAllSkills } from '../data/data';
+import { getAdminDraft } from '../admin/adminStorage';
+
+const allSkills = getAdminDraft()?.allSkills || staticAllSkills;
 
 const Skills = () => (
   <div className="space-y-8 overflow-hidden py-4">
