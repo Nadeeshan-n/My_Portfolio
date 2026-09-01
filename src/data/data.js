@@ -3,7 +3,7 @@ import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent/AI-Agent.png';
 
 export const projectList = [
-  {
+  /*{
     title: "Weather Forecast Accuracy Project",
     desc: "I built a Weather Forecast Accuracy System using Linux and Bash scripting for my course assignment.",
     fullDescription:"This project involved building a system to evaluate the accuracy of weather forecasts by comparing predicted data with actual weather conditions. I utilized Linux command-line tools and Bash scripting to automate the data collection, processing, and analysis. The system collected real-time weather data from APIs, logged historical temperature data, calculated forecast accuracy automatically, and generated weekly statistics for analysis.The project connects a self-hosted n8n workflow (running in Docker, tunneled via ngrok) to a WhatsApp interface, orchestrating conversation flow, memory retrieval, and AI response generation, backed by a FastAPI memory service and SQLite for persistence. It cleanly separates short-term conversation history from long-term structured memory, and combines semantic similarity with importance and confidence scores to decide which memories are actually relevant enough to inject into the agent's context.",
@@ -19,7 +19,7 @@ export const projectList = [
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
     image: weatherImg,
-  },
+  },*/
   {
     title: "AI-Agent Memory System",
     desc: "Structured long-term memory system for an AI agent using FastAPI, SQLite, embeddings, and n8n.",
