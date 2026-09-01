@@ -18,7 +18,25 @@ export const clearAdminDraft = () => {
 };
 
 export const downloadAdminData = (data) => {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const cleaned = JSON.parse(JSON.stringify(data));
+
+  if (Array.isArray(cleaned.projectList)) {
+    cleaned.projectList = cleaned.projectList.map((project) => ({
+      ...project,
+      technologies: Array.isArray(project.technologies)
+        ? project.technologies
+            .map((item) => (typeof item === 'string' ? item.trim() : item))
+            .filter((item) => item !== '' && item !== null && item !== undefined)
+        : [],
+      keyFeatures: Array.isArray(project.keyFeatures)
+        ? project.keyFeatures
+            .map((item) => (typeof item === 'string' ? item.trim() : item))
+            .filter((item) => item !== '' && item !== null && item !== undefined)
+        : [],
+    }));
+  }
+
+  const blob = new Blob([JSON.stringify(cleaned, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;

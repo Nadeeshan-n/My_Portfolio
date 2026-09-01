@@ -74,7 +74,7 @@ const ProjectDetailsPage = ({ project, onBack }) => {
                 Technologies Used
               </h3>
               <div className="flex flex-wrap gap-3">
-                {project.technologies.map((tech, i) => (
+                {project.technologies.filter(Boolean).map((tech, i) => (
                   <span
                     key={i}
                     className="px-4 py-2 bg-[#1a1a1a] border border-[#333333] rounded-lg text-xs font-bold tracking-widest text-zinc-300 uppercase shadow-sm"
@@ -105,7 +105,7 @@ const ProjectDetailsPage = ({ project, onBack }) => {
                 Features
               </h3>
               <ul className="space-y-4">
-                {project.keyFeatures.map((feature, idx) => (
+                {project.keyFeatures.filter(Boolean).map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0"></div>
                     <span className="text-zinc-300 leading-relaxed">{feature}</span>

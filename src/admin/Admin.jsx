@@ -36,7 +36,7 @@ function ProjectsEditor({ items, setItems }) {
   const item = items[selected];
 
   const update = (key, value) => setItems(items.map((entry, i) => i === selected ? { ...entry, [key]: value } : entry));
-  const updateArray = (key, value) => update(key, value.split('\n').map((v) => v.trim()).filter(Boolean));
+  const updateArray = (key, value) => update(key, value.split('\n'));
   const add = () => { setItems([...items, { title: 'New Project', desc: '', fullDescription: '', contributionType: 'Individual Project', technologies: [], keyFeatures: [], link: '#', githubLink: '', image: '' }]); setSelected(items.length); };
   const remove = () => { if (!window.confirm('Delete this project from the current draft?')) return; const next = items.filter((_, i) => i !== selected); setItems(next); setSelected(Math.max(0, Math.min(selected, next.length - 1))); };
 
