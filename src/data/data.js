@@ -1,11 +1,8 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage0 from '../assets/weather-DEFxHcdf.jpg';
-import adminProjectImage1 from '../assets/AI-Agent-Sh0PUj5a.jpg';
-import adminProjectImage2 from '../assets/drive_smart-DBxv_bHL.png';
-import adminProjectImage3 from '../assets/admin-campusfind-1788544024109-3-Bhxnn1ks.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788544946399-4.png';
+import adminProjectImage3 from '../assets/admin-campusfind-1788545684937-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788545686276-4.png';
 
 export const projectList = [
   {
@@ -17,7 +14,7 @@ export const projectList = [
     keyFeatures: ["Collected real-time weather data using APIs","Logged historical temperature data","Calculated forecast accuracy automatically","Generated weekly statistics for analysis"],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
-    image: adminProjectImage0,
+    image: weatherImg,
   },
   {
     title: "AI-Agent Memory System",
@@ -28,7 +25,7 @@ export const projectList = [
     keyFeatures: ["Structured memory model — each memory stored with category, key, value, source, importance, confidence, embedding, memory type, and timestamps (not raw text)","Semantic retrieval — embeddings (Hugging Face) + cosine similarity (NumPy) surface memories by meaning, not exact keyword match","Relevance scoring — combines similarity × importance × confidence, so low-quality matches don't get injected into context","Full memory lifecycle — extraction → validation → create/update/delete → storage → retrieval → expiration → cleanup","CRUD-based memory actions — CREATE, UPDATE, DELETE with duplicate detection to avoid redundant records","Temporary vs. long-term memory — supports expiring memories that are automatically filtered out once expired","Separation of conversation history and long-term memory — recent chat context and durable user facts are handled as two distinct systems","Retrieval filtering — similarity thresholds, expiration, ownership, and embedding validity checks reduce irrelevant context and token usage","FastAPI memory service — REST API layer handling all memory CRUD, scoring, and conversation storage, decoupled from the agent workflow","n8n + Docker + ngrok pipeline — self-hosted workflow orchestration containerized in Docker, exposed via ngrok for WhatsApp webhook integration","Fault-tolerant retrieval — invalid/corrupted embeddings are skipped rather than breaking the whole retrieval process"],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/ai-agent-memory-system",
-    image: adminProjectImage1,
+    image: aiAgentImg,
   },
   {
     title: "Drive Smart - Car Rental Management System",
@@ -39,7 +36,7 @@ export const projectList = [
     keyFeatures: ["Vehicle registration and management","Customer registration and management","Rental booking and return handling","Vehicle availability tracking","Rental record management","Exception handling for safer operations"],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/Drive-Smart-System",
-    image: adminProjectImage2,
+    image: driveSmartImg,
   },
   {
     title: "CampusFind",
@@ -55,7 +52,7 @@ export const projectList = [
   {
     title: "Drive Smart 2.0",
     desc: "A Windows desktop vehicle rental and fleet management system for managing vehicles, customers, payments, maintenance, employees, and operational reports.",
-    fullDescription: "Drive Smart 2.0 is a Windows desktop vehicle rental and fleet management application designed to centralize day-to-day rental operations into a single system.\n\nThe application provides secure employee authentication with session handling and role-based permissions for Admin, Manager, and Staff users. It includes dedicated modules for vehicle registration and browsing, customer management, payments and billing, vehicle maintenance, dashboards, and operational reporting.\n\nThe system uses SQLite databases for its major modules and Entity Framework Core for data access and migrations. It also provides PDF reporting and export capabilities, allowing operational data such as vehicle, maintenance, and payment information to be generated into professional reports.\n\nThe application was developed as a structured WPF desktop solution using C# and .NET 8, with reusable views and controls organized by functional module.",
+    fullDescription: "Drive Smart 2.0 is a Windows desktop vehicle rental and fleet management application designed to centralize day-to-day rental operations into a single system.\n\nThe application provides secure employee authentication with session handling and role-based permissions for Admin, Manager, and Staff users. It includes dedicated modules for vehicle registration and browsing, customer management, payments and billing, vehicle maintenance, dashboards, and operational reporting.\n\nThe system uses SQLite databases for its major modules and Entity Framework Core for data access and migrations. It also provides PDF reporting and export capabilities, allowing operational data such as vehicle, maintenance, and payment information to be generated into professional reports.\n\nThe application was developed as a structured WPF desktop solution using C# and .NET 8, with reusable views and controls organized by functional module.Drive Smart 2.0 is a Windows desktop vehicle rental and fleet management application designed to centralize day-to-day rental operations into a single system.\n\nThe application provides secure employee authentication with session handling and role-based permissions for Admin, Manager, and Staff users. It includes dedicated modules for vehicle registration and browsing, customer management, payments and billing, vehicle maintenance, dashboards, and operational reporting.\n\nThe system uses SQLite databases for its major modules and Entity Framework Core for data access and migrations. It also provides PDF reporting and export capabilities, allowing operational data such as vehicle, maintenance, and payment information to be generated into professional reports.\n\nThe application was developed as a structured WPF desktop solution using C# and .NET 8, with reusable views and controls organized by functional module.",
     contributionType: "Group Project",
     technologies: ["C#",".NET 8","WPF","XAML","SQLite","Entity Framework Core","BCrypt.Net","QuestPDF","ClosedXML","LiveChartsCore","Visual Studio 2022"],
     keyFeatures: ["Employee authentication","Employee registration","Session management","Role-based access control","Admin permissions","Manager permissions","Staff permissions","Vehicle registration","Vehicle browsing","Vehicle management","Vehicle maintenance tracking","Customer management","Payment management","Billing and bill printing","Dashboard analytics","Operational reports","PDF report generation","Excel data export","SQLite database integration","Entity Framework Core migrations","Modular WPF architecture"],
