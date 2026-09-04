@@ -2,13 +2,11 @@ import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
 
-
 export const projectList = [
   {
     title: "Weather Forecast Accuracy Project",
     desc: "I built a Weather Forecast Accuracy System using Linux and Bash scripting for my course assignment.",
     fullDescription:"This project involved building a system to evaluate the accuracy of weather forecasts by comparing predicted data with actual weather conditions. I utilized Linux command-line tools and Bash scripting to automate the data collection, processing, and analysis. The system collected real-time weather data from APIs, logged historical temperature data, calculated forecast accuracy automatically, and generated weekly statistics for analysis.The project connects a self-hosted n8n workflow (running in Docker, tunneled via ngrok) to a WhatsApp interface, orchestrating conversation flow, memory retrieval, and AI response generation, backed by a FastAPI memory service and SQLite for persistence. It cleanly separates short-term conversation history from long-term structured memory, and combines semantic similarity with importance and confidence scores to decide which memories are actually relevant enough to inject into the agent's context.",
-    //role: "Backend Lead & System Architect",
     contributionType: "Individual Project",
     technologies: ["Bash", "Linux", "Curl", "Text processing tools (grep, awk, cut)"],
     keyFeatures: [
@@ -19,6 +17,7 @@ export const projectList = [
     ],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/weather-forecast-project",
+    imageKey: "weather",
     image: weatherImg,
   },
   {
@@ -43,6 +42,7 @@ export const projectList = [
     ],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/ai-agent-memory-system",
+    imageKey: "aiAgent",
     image: aiAgentImg,
   },
   {
@@ -50,7 +50,6 @@ export const projectList = [
     desc: "This system is designed mainly for company-side management, where staff members handle vehicle rentals, customer information, and rental records through a local interface.",
     fullDescription:
       "Drive Smart is a car rental management system built with Java and csv File Systems, designed to streamline the rental process for both customers and staff. The system allows customers to browse available vehicles, make reservations, and manage their bookings through a user friendly interface. On the company side, staff members can efficiently handle vehicle rentals, customer information, and rental records through a local interface.",
-    //role: "",
     contributionType: "Group Project",
     technologies: ["Java", "File Handling", "Java Collections & Generics"],
     keyFeatures: [
@@ -63,10 +62,11 @@ export const projectList = [
     ],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/Drive-Smart-System",
-    image:driveSmartImg,
+    imageKey: "driveSmart",
+    image: driveSmartImg,
   },
 ];
-// Under all abouts are the education details, including degree, institution, period, description, and an image representing the institution or certification.
+
 export const educationList = [
   {
     degree: "Bachelor of Information and Communication Technology",
@@ -89,31 +89,25 @@ export const educationList = [
       "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS.jpeg",
   },
 ];
-// The skills array contains objects representing each skill, including the skill name and a URL to its logo for visual representation in the Skills section.
+
 export const allSkills = [
   { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  //{ name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-  { name: "React",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  //{ name: "Next.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-  { name: "Python",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  //{ name: "Node.js",    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-  //{ name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-  { name: "Docker",     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-  { name: "Git",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-  //{ name: "Tailwind",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-  //{ name: "AWS",        logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
-  { name: "Linux",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-  { name: "C",          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-  { name: "Java",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-  { name: "C#",         logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
-  { name: "SQL",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "HTML",       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS",        logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+  { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+  { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
+  { name: "C", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+  { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { name: "C#", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+  { name: "SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+  { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
 ];
 
 export const contactLinks = [
-  { platform: "GitHub",   handle: "github.com/Nadeeshan-n",               link: "https://github.com/Nadeeshan-n",                                         icon: "Github"   },
-  { platform: "LinkedIn", handle: "linkedin.com/in/nadeeshan-nadeera",     link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/",                icon: "Linkedin" },
-  { platform: "Facebook", handle: "facebook.com/nadeeshan.nadeera.5",      link: "https://www.facebook.com/nadeeshan.nadeera.5",                            icon: "Facebook" },
-  { platform: "Email",    handle: "nadeeshannadeera14@gmail.com",           link: "mailto:nadeeshannadeera14@gmail.com",                                     icon: "Mail"     },
+  { platform: "GitHub", handle: "github.com/Nadeeshan-n", link: "https://github.com/Nadeeshan-n", icon: "Github" },
+  { platform: "LinkedIn", handle: "linkedin.com/in/nadeeshan-nadeera", link: "https://www.linkedin.com/in/nadeeshan-nadeera-7390a52aa/", icon: "Linkedin" },
+  { platform: "Facebook", handle: "facebook.com/nadeeshan.nadeera.5", link: "https://www.facebook.com/nadeeshan.nadeera.5", icon: "Facebook" },
+  { platform: "Email", handle: "nadeeshannadeera14@gmail.com", link: "mailto:nadeeshannadeera14@gmail.com", icon: "Mail" },
 ];
