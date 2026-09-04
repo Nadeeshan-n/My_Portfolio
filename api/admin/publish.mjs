@@ -62,6 +62,18 @@ const githubRequest = async (path, options = {}) => {
 };
 
 export default async function handler(request) {
+  // Safe diagnostic endpoint: exposes only whether the required server variables exist,
+  // never their values. This helps diagnose Vercel environment/deployment issues.
+  if (request.method === 'GET' && new URL(request.url).searchParams.get('check') === 'config') {
+    return json({
+      ok: true,
+      adminTokenConfigured: Boolean(process.env.ADMIN_PUBLISH_TOKEN),
+      githubTokenConfigured: Boolean(process.env.GITHUB_TOKEN),
+      repositoryConfigured: Boolean(REPO),
+      branchConfigured: Boolean(BRANCH),
+    });
+  }
+
   if (!isAuthorized(request)) return json({ error: 'Unauthorized' }, 401);
   if (request.method === 'GET') return json({ ok: true, message: 'Admin publishing is configured.' });
   if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
