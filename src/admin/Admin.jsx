@@ -1,6 +1,16 @@
 import { useMemo, useState } from 'react';
 import { allSkills, contactLinks, educationList, projectList } from '../data/data';
-import { downloadAdminData, getAdminDraft, saveAdminDraft, clearAdminDraft } from './adminStorage';
+import {
+  downloadAdminData,
+  getAdminDraft,
+  saveAdminDraft,
+  clearAdminDraft,
+  getPublishToken,
+  setPublishToken,
+  clearPublishToken,
+  verifyPublishToken,
+  publishAdminData,
+} from './adminStorage';
 
 const initialData = { projectList, educationList, allSkills, contactLinks };
 
@@ -10,13 +20,13 @@ const primaryClass = 'rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
-const Field = ({ label, value, onChange, textarea = false, placeholder = '' }) => (
+const Field = ({ label, value, onChange, textarea = false, placeholder = '', type = 'text' }) => (
   <label className="block space-y-2">
     <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">{label}</span>
     {textarea ? (
       <textarea rows={5} value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={inputClass} />
     ) : (
-      <input value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={inputClass} />
+      <input type={type} value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} className={inputClass} />
     )}
   </label>
 );
@@ -113,24 +123,65 @@ function ContactEditor({ items, setItems }) {
 export default function Admin() {
   const [data, setData] = useState(() => clone(getAdminDraft() || initialData));
   const [section, setSection] = useState('dashboard');
-  const [saved, setSaved] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(() => sessionStorage.getItem('portfolio-admin-auth') === '1');
+  const [status, setStatus] = useState('');
+  const [loggedIn, setLoggedIn] = useState(() => Boolean(getPublishToken()));
   const [password, setPassword] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   const stats = useMemo(() => ({ projects: data.projectList.length, skills: data.allSkills.length, education: data.educationList.length, contacts: data.contactLinks.length }), [data]);
 
-  const save = () => { saveAdminDraft(data); setSaved(true); setTimeout(() => setSaved(false), 1800); };
-  const reset = () => { if (!window.confirm('Discard the local admin draft and restore the original portfolio data?')) return; clearAdminDraft(); setData(clone(initialData)); };
+  const save = async () => {
+    setPublishing(true);
+    setStatus('Publishing...');
+    saveAdminDraft(data);
+    try {
+      await publishAdminData(data);
+      setStatus('Published successfully. Vercel is deploying the update.');
+    } catch (error) {
+      setStatus(error.message || 'Publishing failed. Your draft is still saved locally.');
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const reset = () => { if (!window.confirm('Discard the local admin draft and restore the original portfolio data?')) return; clearAdminDraft(); setData(clone(initialData)); setStatus('Draft reset.'); };
   const update = (key, value) => setData((current) => ({ ...current, [key]: value }));
 
-  if (!loggedIn) return <div className="min-h-screen bg-zinc-950 px-6 text-zinc-100"><div className="mx-auto flex min-h-screen max-w-md items-center"><div className="w-full rounded-3xl border border-zinc-800 bg-zinc-900/70 p-8 shadow-2xl"><div className="mb-8"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-3 text-3xl font-bold">Admin access</h1><p className="mt-2 text-sm text-zinc-500">This first version uses a local browser session. Set a real authentication provider before production use.</p></div><form onSubmit={(e) => { e.preventDefault(); if (password === 'admin') { sessionStorage.setItem('portfolio-admin-auth', '1'); setLoggedIn(true); } }} className="space-y-4"><Field label="Password" value={password} onChange={setPassword} /><button className={`${primaryClass} w-full`} type="submit">Sign in</button></form><p className="mt-4 text-center text-xs text-zinc-600">Development password: admin</p></div></div></div>;
+  const login = async (event) => {
+    event.preventDefault();
+    if (!password.trim()) return;
+    setLoggingIn(true);
+    setStatus('Checking credentials...');
+    try {
+      const valid = await verifyPublishToken(password.trim());
+      if (!valid) throw new Error('Invalid admin token.');
+      setPublishToken(password.trim());
+      setLoggedIn(true);
+      setPassword('');
+      setStatus('Signed in.');
+    } catch (error) {
+      setStatus(error.message || 'Unable to sign in.');
+    } finally {
+      setLoggingIn(false);
+    }
+  };
+
+  const logout = () => {
+    clearPublishToken();
+    sessionStorage.removeItem('portfolio-admin-auth');
+    setLoggedIn(false);
+    setStatus('');
+  };
+
+  if (!loggedIn) return <div className="min-h-screen bg-zinc-950 px-6 text-zinc-100"><div className="mx-auto flex min-h-screen max-w-md items-center"><div className="w-full rounded-3xl border border-zinc-800 bg-zinc-900/70 p-8 shadow-2xl"><div className="mb-8"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-3 text-3xl font-bold">Admin access</h1><p className="mt-2 text-sm text-zinc-500">Use the private admin publish token configured in Vercel. It is never included in the public build.</p></div><form onSubmit={login} className="space-y-4"><Field label="Admin publish token" type="password" value={password} onChange={setPassword} placeholder="Enter your private token" /><button className={`${primaryClass} w-full disabled:opacity-50`} type="submit" disabled={loggingIn}>{loggingIn ? 'Checking...' : 'Sign in'}</button></form>{status && <p className="mt-4 text-center text-xs text-zinc-500">{status}</p>}<p className="mt-4 text-center text-xs text-zinc-600">Do not put this token in your source code or a VITE_ variable.</p></div></div></div>;
 
   const nav = [['dashboard','Dashboard'],['projects','Projects'],['skills','Skills'],['education','Education'],['contact','Contact']];
   return <div className="min-h-screen bg-zinc-950 text-zinc-100">
-    <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-zinc-900 bg-zinc-950/95 p-5 lg:block"><div className="mb-10"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-2 text-xl font-bold">Admin Console</h1></div><nav className="space-y-1">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`w-full rounded-xl px-4 py-3 text-left text-sm transition ${section === id ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:bg-zinc-900/60 hover:text-zinc-300'}`}>{label}</button>)}</nav><button onClick={() => { sessionStorage.removeItem('portfolio-admin-auth'); setLoggedIn(false); }} className="absolute bottom-6 left-5 text-sm text-zinc-600 hover:text-zinc-300">Sign out</button></aside>
-    <main className="min-h-screen lg:ml-64"><header className="sticky top-0 z-20 border-b border-zinc-900 bg-zinc-950/85 px-6 py-4 backdrop-blur-xl md:px-10"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-zinc-600">Portfolio / Admin</p><h2 className="text-lg font-semibold capitalize">{section}</h2></div><div className="flex flex-wrap gap-2"><button onClick={() => downloadAdminData(data)} className={buttonClass}>Export JSON</button><button onClick={reset} className={buttonClass}>Reset</button><button onClick={save} className={primaryClass}>{saved ? 'Saved locally' : 'Save draft'}</button></div></div><div className="mt-3 flex gap-1 overflow-x-auto lg:hidden">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs ${section === id ? 'bg-zinc-800 text-white' : 'text-zinc-500'}`}>{label}</button>)}</div></header>
+    <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-zinc-900 bg-zinc-950/95 p-5 lg:block"><div className="mb-10"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-2 text-xl font-bold">Admin Console</h1></div><nav className="space-y-1">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`w-full rounded-xl px-4 py-3 text-left text-sm transition ${section === id ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:bg-zinc-900/60 hover:text-zinc-300'}`}>{label}</button>)}</nav><button onClick={logout} className="absolute bottom-6 left-5 text-sm text-zinc-600 hover:text-zinc-300">Sign out</button></aside>
+    <main className="min-h-screen lg:ml-64"><header className="sticky top-0 z-20 border-b border-zinc-900 bg-zinc-950/85 px-6 py-4 backdrop-blur-xl md:px-10"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-zinc-600">Portfolio / Admin</p><h2 className="text-lg font-semibold capitalize">{section}</h2></div><div className="flex flex-wrap gap-2"><button onClick={() => downloadAdminData(data)} className={buttonClass}>Export JSON</button><button onClick={reset} className={buttonClass}>Reset</button><button onClick={save} disabled={publishing} className={`${primaryClass} disabled:cursor-wait disabled:opacity-60`}>{publishing ? 'Publishing...' : 'Publish changes'}</button></div></div>{status && <p className="mt-3 text-sm text-indigo-300">{status}</p>}<div className="mt-3 flex gap-1 overflow-x-auto lg:hidden">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs ${section === id ? 'bg-zinc-800 text-white' : 'text-zinc-500'}`}>{label}</button>)}</div></header>
       <div className="mx-auto max-w-7xl p-6 md:p-10">
-        {section === 'dashboard' && <><SectionHeader title="Portfolio overview" description="A local editing workspace for your portfolio content." /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{Object.entries(stats).map(([key,value]) => <div key={key} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"><p className="text-xs uppercase tracking-wider text-zinc-600">{key}</p><p className="mt-3 text-4xl font-black text-white">{value}</p></div>)}</div><div className="mt-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-6"><h3 className="font-semibold text-indigo-300">How this version works</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">Changes are saved to this browser's local storage and can be exported as JSON. The public portfolio still uses the existing source data. The next step is to connect Save to a secure GitHub/server workflow so edits can publish to the live site.</p></div></>}
+        {section === 'dashboard' && <><SectionHeader title="Portfolio overview" description="Edit your portfolio and publish changes directly to GitHub." /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{Object.entries(stats).map(([key,value]) => <div key={key} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"><p className="text-xs uppercase tracking-wider text-zinc-600">{key}</p><p className="mt-3 text-4xl font-black text-white">{value}</p></div>)}</div><div className="mt-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-6"><h3 className="font-semibold text-indigo-300">Publishing flow</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">Your edits are saved locally as a draft and, when you click Publish changes, sent to a protected Vercel Function. The function uses the server-side GitHub token to update the portfolio data file. Your GitHub commit then triggers the normal Vercel deployment.</p></div></>}
         {section === 'projects' && <ProjectsEditor items={data.projectList} setItems={(v) => update('projectList', typeof v === 'function' ? v(data.projectList) : v)} />}
         {section === 'skills' && <SkillsEditor items={data.allSkills} setItems={(v) => update('allSkills', typeof v === 'function' ? v(data.allSkills) : v)} />}
         {section === 'education' && <EducationEditor items={data.educationList} setItems={(v) => update('educationList', typeof v === 'function' ? v(data.educationList) : v)} />}
