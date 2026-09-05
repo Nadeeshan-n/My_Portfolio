@@ -150,13 +150,38 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const url = new URL(req.url || '/', 'https://portfolio.local');
       if (url.searchParams.get('check') === 'config') {
-        return sendJson(res, { ok: true, adminTokenConfigured: Boolean(process.env.ADMIN_PUBLISH_TOKEN), githubTokenConfigured: Boolean(process.env.GITHUB_TOKEN), repositoryConfigured: Boolean(REPO), branchConfigured: Boolean(BRANCH) });
+        return sendJson(res, {
+          ok: true,
+          adminTokenConfigured: Boolean(process.env.ADMIN_PUBLISH_TOKEN),
+          githubTokenConfigured: Boolean(process.env.GITHUB_TOKEN),
+          repositoryConfigured: Boolean(REPO),
+          branchConfigured: Boolean(BRANCH),
+        });
       }
-      if (!isAuthorized(req)) return sendJson(res, { error: 'Unauthorized' }, 401);
-      return sendJson(res, { ok: true, message: 'Admin publishing is configured.' });
+
+      if (!isAuthorized(req)) {
+        return sendJson(res, {
+          ok: false,
+          error: process.env.ADMIN_PUBLISH_TOKEN
+            ? 'Invalid ADMIN_PUBLISH_TOKEN. Access denied.'
+            : 'Admin access denied. Please provide a valid admin token.',
+        }, 401);
+      }
+
+      return sendJson(res, {
+        ok: true,
+        authenticated: true,
+        message: 'ADMIN_PUBLISH_TOKEN verified successfully. Admin access granted.',
+        adminTokenConfigured: Boolean(process.env.ADMIN_PUBLISH_TOKEN),
+        githubTokenConfigured: Boolean(process.env.GITHUB_TOKEN),
+        repo: REPO,
+        branch: BRANCH,
+      });
     }
 
-    if (!isAuthorized(req)) return sendJson(res, { error: 'Unauthorized' }, 401);
+    if (!isAuthorized(req)) {
+      return sendJson(res, { error: 'Invalid or missing ADMIN_PUBLISH_TOKEN. Access denied.' }, 401);
+    }
     if (req.method !== 'POST') return sendJson(res, { error: 'Method not allowed' }, 405);
 
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});

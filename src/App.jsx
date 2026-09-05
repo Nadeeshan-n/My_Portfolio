@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import { projectList, educationList, allSkills, contactLinks } from './data/data';
-import { HomeIcon, User, Briefcase, Code2, GraduationCap, Mail } from './components/icons/Icons';
+import { HomeIcon, User, Briefcase, Code2, GraduationCap, Mail, Lock, Unlock } from './components/icons/Icons';
 
 import SectionDivider from './components/SectionDivider';
 import ProjectDetailsPage from './components/ProjectDetailsPage';
+import AdminLogin from './admin/AdminLogin';
+import { getPublishToken } from './admin/adminStorage';
 
 import Home from './sections/Home';
 import About from './sections/About';
@@ -25,6 +27,20 @@ const navItems = [
 const App = ({ onNavigateToAdmin }) => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(getPublishToken()));
+
+  useEffect(() => {
+    setIsAuthenticated(Boolean(getPublishToken()));
+  }, []);
+
+  const handleAdminAccess = () => {
+    if (isAuthenticated) {
+      if (onNavigateToAdmin) onNavigateToAdmin();
+    } else {
+      setIsLoginModalOpen(true);
+    }
+  };
 
   useEffect(() => {
     if (selectedProject) return;
@@ -62,6 +78,24 @@ const App = ({ onNavigateToAdmin }) => {
               <span className="hidden md:inline">{item.label}</span>
             </button>
           ))}
+
+          {onNavigateToAdmin && (
+            <>
+              <div className="h-4 w-px bg-zinc-800 mx-1 hidden sm:block" />
+              <button
+                onClick={handleAdminAccess}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all ${
+                  isAuthenticated
+                    ? 'text-emerald-400 hover:bg-emerald-500/10'
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800'
+                }`}
+                title={isAuthenticated ? 'Open Admin Console' : 'Sign in to Admin Console'}
+              >
+                {isAuthenticated ? <Unlock size={14} className="text-emerald-400" /> : <Lock size={14} />}
+                <span className="hidden lg:inline">{isAuthenticated ? 'Admin' : 'Admin'}</span>
+              </button>
+            </>
+          )}
         </div>
       </nav>
 
@@ -87,11 +121,11 @@ const App = ({ onNavigateToAdmin }) => {
           <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
           {onNavigateToAdmin && (
             <button
-              onClick={onNavigateToAdmin}
-              className="text-zinc-500 hover:text-indigo-400 transition-colors inline-flex items-center gap-1.5"
+              onClick={handleAdminAccess}
+              className="text-zinc-500 hover:text-indigo-400 transition-colors inline-flex items-center gap-1.5 text-xs font-medium"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-              Admin CMS
+              {isAuthenticated ? <Unlock size={13} className="text-emerald-400" /> : <Lock size={13} />}
+              <span>{isAuthenticated ? 'Admin Console' : 'Admin Login'}</span>
             </button>
           )}
         </div>
@@ -99,13 +133,36 @@ const App = ({ onNavigateToAdmin }) => {
 
       {onNavigateToAdmin && (
         <button
-          onClick={onNavigateToAdmin}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white shadow-xl backdrop-blur-md transition-all hover:scale-105"
-          title="Open Admin CMS"
+          onClick={handleAdminAccess}
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-2.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white shadow-xl backdrop-blur-md transition-all hover:scale-105"
+          title={isAuthenticated ? 'Open Admin Console' : 'Admin Login (ADMIN_PUBLISH_TOKEN)'}
         >
-          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-          Admin Console
+          {isAuthenticated ? (
+            <>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <Unlock size={13} className="text-emerald-400" />
+              <span>Admin Console</span>
+            </>
+          ) : (
+            <>
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+              <Lock size={13} className="text-indigo-400" />
+              <span>Admin Login</span>
+            </>
+          )}
         </button>
+      )}
+
+      {isLoginModalOpen && (
+        <AdminLogin
+          isModal={true}
+          onLoginSuccess={() => {
+            setIsAuthenticated(true);
+            setIsLoginModalOpen(false);
+            if (onNavigateToAdmin) onNavigateToAdmin();
+          }}
+          onCancel={() => setIsLoginModalOpen(false)}
+        />
       )}
 
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">

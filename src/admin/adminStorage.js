@@ -39,14 +39,46 @@ const requestPublishApi = async (url, options = {}) => {
 
 export const verifyPublishToken = async (token) => {
   try {
+    const cleanToken = (token || '').trim();
+    if (!cleanToken) return { ok: false, error: 'Please enter your ADMIN_PUBLISH_TOKEN.' };
+
     const response = await requestPublishApi('/api/admin/publish', {
       method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${cleanToken}` },
     });
-    return response.ok;
-  } catch {
-    return false;
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      // response might not be JSON
+    }
+
+    if (response.ok) {
+      return { ok: true, data };
+    }
+    return {
+      ok: false,
+      error: data?.error || (response.status === 401 ? 'Invalid ADMIN_PUBLISH_TOKEN. Please check your configured token.' : `Verification failed (HTTP ${response.status})`),
+    };
+  } catch (err) {
+    return { ok: false, error: err.message || 'Could not connect to authentication server.' };
   }
+};
+
+export const loginAdmin = async (token) => {
+  const cleanToken = (token || '').trim();
+  const result = await verifyPublishToken(cleanToken);
+  if (result.ok) {
+    setPublishToken(cleanToken);
+    return { success: true, data: result.data };
+  }
+  return { success: false, error: result.error };
+};
+
+export const logoutAdmin = () => {
+  clearPublishToken();
+  sessionStorage.removeItem('portfolio-admin-auth');
 };
 
 export const publishAdminData = async (data, token = getPublishToken()) => {

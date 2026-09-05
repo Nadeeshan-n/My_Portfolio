@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { allSkills, contactLinks, educationList, projectList } from '../data/data';
 import {
   downloadAdminData,
@@ -6,11 +6,12 @@ import {
   saveAdminDraft,
   clearAdminDraft,
   getPublishToken,
-  setPublishToken,
-  clearPublishToken,
-  verifyPublishToken,
   publishAdminData,
+  logoutAdmin,
+  verifyPublishToken,
 } from './adminStorage';
+import AdminLogin from './AdminLogin';
+import { Lock, LogOut, ShieldCheck } from '../components/icons/Icons';
 
 const initialData = { projectList, educationList, allSkills, contactLinks };
 
@@ -214,14 +215,249 @@ function ContactEditor({ items, setItems }) {
 
 export default function Admin({ onNavigateToPortfolio }) {
   const [data, setData] = useState(() => clone(getAdminDraft() || initialData));
-  const [section, setSection] = useState('dashboard'); const [status, setStatus] = useState(''); const [loggedIn, setLoggedIn] = useState(() => Boolean(getPublishToken())); const [password, setPassword] = useState(''); const [loggingIn, setLoggingIn] = useState(false); const [publishing, setPublishing] = useState(false);
-  const stats = useMemo(() => ({ projects: data.projectList.length, skills: data.allSkills.length, education: data.educationList.length, contacts: data.contactLinks.length }), [data]);
-  const save = async () => { setPublishing(true); setStatus('Publishing...'); saveAdminDraft(data); try { await publishAdminData(data); setStatus('Published successfully. Vercel is deploying the update.'); } catch (error) { setStatus(error.message || 'Publishing failed. Your draft is still saved locally.'); } finally { setPublishing(false); } };
-  const reset = () => { if (!window.confirm('Discard the local admin draft and restore the original portfolio data?')) return; clearAdminDraft(); setData(clone(initialData)); setStatus('Draft reset.'); };
+  const [section, setSection] = useState('dashboard');
+  const [status, setStatus] = useState('');
+  const [loggedIn, setLoggedIn] = useState(() => Boolean(getPublishToken()));
+  const [publishing, setPublishing] = useState(false);
+
+  // Validate existing stored session token on mount
+  useEffect(() => {
+    const existing = getPublishToken();
+    if (existing) {
+      verifyPublishToken(existing).then((res) => {
+        if (!res.ok) {
+          logoutAdmin();
+          setLoggedIn(false);
+          setStatus('Session expired or token changed. Please sign in again.');
+        }
+      });
+    }
+  }, []);
+
+  const stats = useMemo(() => ({
+    projects: data.projectList.length,
+    skills: data.allSkills.length,
+    education: data.educationList.length,
+    contacts: data.contactLinks.length,
+  }), [data]);
+
+  const save = async () => {
+    setPublishing(true);
+    setStatus('Publishing...');
+    saveAdminDraft(data);
+    try {
+      await publishAdminData(data);
+      setStatus('Published successfully. Changes synced to portfolio.');
+    } catch (error) {
+      setStatus(error.message || 'Publishing failed. Your draft is still saved locally.');
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const reset = () => {
+    if (!window.confirm('Discard the local admin draft and restore the original portfolio data?')) return;
+    clearAdminDraft();
+    setData(clone(initialData));
+    setStatus('Draft reset.');
+  };
+
   const update = (key, value) => setData((current) => ({ ...current, [key]: value }));
-  const login = async (event) => { event.preventDefault(); if (!password.trim()) return; setLoggingIn(true); setStatus('Checking credentials...'); try { const valid = await verifyPublishToken(password.trim()); if (!valid) throw new Error('Invalid admin token.'); setPublishToken(password.trim()); setLoggedIn(true); setPassword(''); setStatus('Signed in.'); } catch (error) { setStatus(error.message || 'Unable to sign in.'); } finally { setLoggingIn(false); } };
-  const logout = () => { clearPublishToken(); sessionStorage.removeItem('portfolio-admin-auth'); setLoggedIn(false); setStatus(''); };
-  if (!loggedIn) return <div className="min-h-screen bg-zinc-950 px-6 text-zinc-100 flex flex-col justify-center items-center py-12"><div className="w-full max-w-md">{onNavigateToPortfolio && <div className="mb-4"><button onClick={onNavigateToPortfolio} className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200">← Back to Live Portfolio</button></div>}<div className="w-full rounded-3xl border border-zinc-800 bg-zinc-900/70 p-8 shadow-2xl"><div className="mb-8"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-3 text-3xl font-bold">Admin access</h1><p className="mt-2 text-sm text-zinc-500">Use the private admin publish token configured in Vercel. It is never included in the public build.</p></div><form onSubmit={login} className="space-y-4"><Field label="Admin publish token" type="password" value={password} onChange={setPassword} placeholder="Enter your private token" /><button className={`${primaryClass} w-full disabled:opacity-50`} type="submit" disabled={loggingIn}>{loggingIn ? 'Checking...' : 'Sign in'}</button></form>{status && <p className="mt-4 text-center text-xs text-zinc-500">{status}</p>}<p className="mt-4 text-center text-xs text-zinc-600">Do not put this token in your source code or a VITE_ variable.</p></div></div></div>;
-  const nav = [['dashboard','Dashboard'],['projects','Projects'],['skills','Skills'],['education','Education'],['contact','Contact']];
-  return <div className="min-h-screen bg-zinc-950 text-zinc-100"><aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-zinc-900 bg-zinc-950/95 p-5 lg:block"><div className="mb-10"><p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p><h1 className="mt-2 text-xl font-bold">Admin Console</h1></div><nav className="space-y-1">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`w-full rounded-xl px-4 py-3 text-left text-sm transition ${section === id ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:bg-zinc-900/60 hover:text-zinc-300'}`}>{label}</button>)}</nav><div className="absolute bottom-6 left-5 space-y-2">{onNavigateToPortfolio && <button onClick={onNavigateToPortfolio} className="block text-sm text-indigo-400 hover:text-indigo-300">← View Portfolio</button>}<button onClick={logout} className="block text-sm text-zinc-600 hover:text-zinc-300">Sign out</button></div></aside><main className="min-h-screen lg:ml-64"><header className="sticky top-0 z-20 border-b border-zinc-900 bg-zinc-950/85 px-6 py-4 backdrop-blur-xl md:px-10"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-zinc-600">Portfolio / Admin</p><h2 className="text-lg font-semibold capitalize">{section}</h2></div><div className="flex flex-wrap gap-2">{onNavigateToPortfolio && <button onClick={onNavigateToPortfolio} className={buttonClass}>← View Portfolio</button>}<button onClick={() => downloadAdminData(data)} className={buttonClass}>Export JSON</button><button onClick={reset} className={buttonClass}>Reset</button><button onClick={save} disabled={publishing} className={`${primaryClass} disabled:cursor-wait disabled:opacity-60`}>{publishing ? 'Publishing...' : 'Publish changes'}</button></div></div>{status && <p className="mt-3 text-sm text-indigo-300">{status}</p>}<div className="mt-3 flex items-center justify-between gap-2 overflow-x-auto lg:hidden"><div className="flex gap-1">{nav.map(([id,label]) => <button key={id} onClick={() => setSection(id)} className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs ${section === id ? 'bg-zinc-800 text-white' : 'text-zinc-500'}`}>{label}</button>)}</div>{onNavigateToPortfolio && <button onClick={onNavigateToPortfolio} className="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/10">← Portfolio</button>}</div></header><div className="mx-auto max-w-7xl p-6 md:p-10">{section === 'dashboard' && <><SectionHeader title="Portfolio overview" description="Edit your portfolio and publish changes directly to GitHub." /><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{Object.entries(stats).map(([key,value]) => <div key={key} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"><p className="text-xs uppercase tracking-wider text-zinc-600">{key}</p><p className="mt-3 text-4xl font-black text-white">{value}</p></div>)}</div><div className="mt-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-6"><h3 className="font-semibold text-indigo-300">Publishing flow</h3><p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">Your edits are saved locally as a draft and, when you click Publish changes, sent to a protected Vercel Function. The function uses the server-side GitHub token to update the portfolio data file. Your GitHub commit then triggers the normal Vercel deployment.</p></div></>}{section === 'projects' && <ProjectsEditor items={data.projectList} setItems={(v) => update('projectList', typeof v === 'function' ? v(data.projectList) : v)} />}{section === 'skills' && <SkillsEditor items={data.allSkills} setItems={(v) => update('allSkills', typeof v === 'function' ? v(data.allSkills) : v)} />}{section === 'education' && <EducationEditor items={data.educationList} setItems={(v) => update('educationList', typeof v === 'function' ? v(data.educationList) : v)} />}{section === 'contact' && <ContactEditor items={data.contactLinks} setItems={(v) => update('contactLinks', typeof v === 'function' ? v(data.contactLinks) : v)} />}</div></main></div>;
+
+  const handleLogout = () => {
+    logoutAdmin();
+    setLoggedIn(false);
+    setStatus('Signed out of admin console.');
+  };
+
+  if (!loggedIn) {
+    return (
+      <AdminLogin
+        onLoginSuccess={() => {
+          setLoggedIn(true);
+          setStatus('Authenticated with ADMIN_PUBLISH_TOKEN.');
+        }}
+        onCancel={onNavigateToPortfolio}
+      />
+    );
+  }
+
+  const nav = [
+    ['dashboard', 'Dashboard'],
+    ['projects', 'Projects'],
+    ['skills', 'Skills'],
+    ['education', 'Education'],
+    ['contact', 'Contact'],
+  ];
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-zinc-900 bg-zinc-950/95 p-5 lg:flex lg:flex-col lg:justify-between">
+        <div>
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[.25em] text-indigo-400">Portfolio CMS</p>
+            <h1 className="mt-2 text-xl font-bold">Admin Console</h1>
+          </div>
+
+          <div className="mb-6 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-medium text-emerald-400">
+            <ShieldCheck size={15} className="shrink-0" />
+            <span className="truncate">ADMIN_PUBLISH_TOKEN active</span>
+          </div>
+
+          <nav className="space-y-1">
+            {nav.map(([id, label]) => (
+              <button
+                key={id}
+                onClick={() => setSection(id)}
+                className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
+                  section === id ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-500 hover:bg-zinc-900/60 hover:text-zinc-300'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <div className="space-y-2 border-t border-zinc-900 pt-4">
+          {onNavigateToPortfolio && (
+            <button
+              onClick={onNavigateToPortfolio}
+              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-indigo-400 hover:bg-indigo-500/10 transition"
+            >
+              ← View Live Portfolio
+            </button>
+          )}
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-zinc-500 hover:bg-zinc-900 hover:text-red-400 transition"
+          >
+            <LogOut size={14} />
+            <span>Sign out</span>
+          </button>
+        </div>
+      </aside>
+
+      <main className="min-h-screen lg:ml-64">
+        <header className="sticky top-0 z-20 border-b border-zinc-900 bg-zinc-950/85 px-6 py-4 backdrop-blur-xl md:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <p className="text-xs uppercase tracking-wider text-zinc-600">Portfolio / Admin</p>
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  Authenticated
+                </span>
+              </div>
+              <h2 className="text-lg font-semibold capitalize">{section}</h2>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {onNavigateToPortfolio && (
+                <button onClick={onNavigateToPortfolio} className={buttonClass}>
+                  ← View Portfolio
+                </button>
+              )}
+              <button onClick={() => downloadAdminData(data)} className={buttonClass}>
+                Export JSON
+              </button>
+              <button onClick={reset} className={buttonClass}>
+                Reset
+              </button>
+              <button
+                onClick={save}
+                disabled={publishing}
+                className={`${primaryClass} disabled:cursor-wait disabled:opacity-60`}
+              >
+                {publishing ? 'Publishing...' : 'Publish changes'}
+              </button>
+              <button
+                onClick={handleLogout}
+                className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-2.5 text-zinc-400 hover:bg-zinc-800 hover:text-red-400 transition"
+                title="Sign out of admin console"
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          </div>
+          {status && <p className="mt-3 text-sm text-indigo-300">{status}</p>}
+
+          <div className="mt-3 flex items-center justify-between gap-2 overflow-x-auto lg:hidden">
+            <div className="flex gap-1">
+              {nav.map(([id, label]) => (
+                <button
+                  key={id}
+                  onClick={() => setSection(id)}
+                  className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs font-medium ${
+                    section === id ? 'bg-zinc-800 text-white' : 'text-zinc-500'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            {onNavigateToPortfolio && (
+              <button
+                onClick={onNavigateToPortfolio}
+                className="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-xs text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/10"
+              >
+                ← Portfolio
+              </button>
+            )}
+          </div>
+        </header>
+
+        <div className="mx-auto max-w-7xl p-6 md:p-10">
+          {section === 'dashboard' && (
+            <>
+              <SectionHeader
+                title="Portfolio overview"
+                description="Edit your portfolio content and publish changes directly using ADMIN_PUBLISH_TOKEN."
+              />
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {Object.entries(stats).map(([key, value]) => (
+                  <div key={key} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+                    <p className="text-xs uppercase tracking-wider text-zinc-600">{key}</p>
+                    <p className="mt-3 text-4xl font-black text-white">{value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-6">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-indigo-400" />
+                  <h3 className="font-semibold text-indigo-300">Publishing & Authentication Flow</h3>
+                </div>
+                <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">
+                  You are authenticated with your <code className="text-indigo-300 font-mono text-xs">ADMIN_PUBLISH_TOKEN</code>. When you click <strong className="text-zinc-200">Publish changes</strong>, your updates are sent to the secure server function. If <code className="text-indigo-300 font-mono text-xs">GITHUB_TOKEN</code> is configured in Vercel, the function automatically commits your changes to GitHub, triggering a fresh Vercel deployment.
+                </p>
+              </div>
+            </>
+          )}
+          {section === 'projects' && (
+            <ProjectsEditor
+              items={data.projectList}
+              setItems={(v) => update('projectList', typeof v === 'function' ? v(data.projectList) : v)}
+            />
+          )}
+          {section === 'skills' && (
+            <SkillsEditor
+              items={data.allSkills}
+              setItems={(v) => update('allSkills', typeof v === 'function' ? v(data.allSkills) : v)}
+            />
+          )}
+          {section === 'education' && (
+            <EducationEditor
+              items={data.educationList}
+              setItems={(v) => update('educationList', typeof v === 'function' ? v(data.educationList) : v)}
+            />
+          )}
+          {section === 'contact' && (
+            <ContactEditor
+              items={data.contactLinks}
+              setItems={(v) => update('contactLinks', typeof v === 'function' ? v(data.contactLinks) : v)}
+            />
+          )}
+        </div>
+      </main>
+    </div>
+  );
 }
