@@ -1,8 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788624086763-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788624087917-4.png';
+import adminProjectImage3 from '../assets/admin-campusfind-1788628747455-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788628748707-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788628749869-5.jpg';
 
 export const projectList = [
   {
@@ -69,7 +70,7 @@ export const projectList = [
     keyFeatures: ["Local Python-based MCP server","MCP tool implementation","Task creation and management","Task search functionality","MCP resource implementation","MCP prompt implementation","Custom MCP client","Tool discovery and tool invocation","Gemini + MCP integration","Google ADK + MCP integration","stdio-based local communication","JSON-based local task storage"],
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/Personal-Task-MCP-Server",
-    image: "",
+    image: adminProjectImage5,
   },
 ];
 
