@@ -26,6 +26,33 @@
     <meta name="twitter:card" content="summary_large_image" />
     <title>Nadeeshan Nadeera — Portfolio</title>
 
+    <!-- Shim window.fetch setter in environments where window.fetch is getter-only -->
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var currentFetch = originalFetch;
+          var desc = Object.getOwnPropertyDescriptor(window, 'fetch') ||
+                     Object.getOwnPropertyDescriptor(Object.getPrototypeOf(window), 'fetch');
+          if (desc && !desc.set && desc.configurable) {
+            Object.defineProperty(window, 'fetch', {
+              get: function() { return currentFetch; },
+              set: function(fn) { currentFetch = fn; },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {}
+
+        window.addEventListener('error', function(event) {
+          if (event && event.message && event.message.includes('fetch') && event.message.includes('getter')) {
+            event.preventDefault && event.preventDefault();
+            return true;
+          }
+        });
+      })();
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5BEK5REMEM"></script>
 
@@ -37,12 +64,21 @@
       gtag('config', 'G-5BEK5REMEM');
     </script>
 
+    <!-- Microsoft Clarity (only executed in top-level production environments to avoid sandbox iframe errors) -->
     <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wngwrfyfla");
+      try {
+        var isTopWindow = window.self === window.top;
+        var isDevHost = window.location.hostname === 'localhost' ||
+                        window.location.hostname === '127.0.0.1' ||
+                        window.location.hostname.includes('run.app');
+        if (isTopWindow && !isDevHost) {
+          (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "wngwrfyfla");
+        }
+      } catch (e) {}
     </script>
   </head>
 

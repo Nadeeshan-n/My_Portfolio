@@ -29,24 +29,49 @@ export const setPublishToken = (token) => sessionStorage.setItem(TOKEN_KEY, toke
 
 export const clearPublishToken = () => sessionStorage.removeItem(TOKEN_KEY);
 
+const requestPublishApi = async (url, options = {}) => {
+  let response = await fetch(url, options);
+  if (response.status === 404 && url === '/api/admin/publish') {
+    response = await fetch('/api/publish', options);
+  }
+  return response;
+};
+
 export const verifyPublishToken = async (token) => {
-  const response = await fetch('/api/admin/publish', {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.ok;
+  try {
+    const response = await requestPublishApi('/api/admin/publish', {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
 };
 
 export const publishAdminData = async (data, token = getPublishToken()) => {
   if (!token) throw new Error('Admin publish token is missing.');
 
-  const response = await fetch('/api/admin/publish', {
+  // Deep clone and deduplicate base64 data to keep payload well within Vercel's 4.5 MB request limit
+  const payload = JSON.parse(JSON.stringify(data));
+  if (Array.isArray(payload.projectList)) {
+    payload.projectList = payload.projectList.map((project) => {
+      const copy = { ...project };
+      if (copy.imageUpload?.dataUrl && typeof copy.image === 'string' && copy.image.startsWith('data:')) {
+        // Clearing duplicate base64 from copy.image cuts payload size in half
+        copy.image = '';
+      }
+      return copy;
+    });
+  }
+
+  const response = await requestPublishApi('/api/admin/publish', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
 
   let result = null;
@@ -57,7 +82,10 @@ export const publishAdminData = async (data, token = getPublishToken()) => {
   }
 
   if (!response.ok) {
-    throw new Error(result?.error || 'Portfolio publishing failed.');
+    if (response.status === 413) {
+      throw new Error('Payload too large (HTTP 413). Please choose a smaller image.');
+    }
+    throw new Error(result?.error || `Portfolio publishing failed (HTTP ${response.status}).`);
   }
 
   return result;

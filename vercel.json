@@ -1,7 +1,19 @@
 {
   "rewrites": [
     {
+      "source": "/api/admin/publish",
+      "destination": "/api/admin/publish.mjs"
+    },
+    {
+      "source": "/api/publish",
+      "destination": "/api/publish.mjs"
+    },
+    {
       "source": "/admin",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/(.*)",
       "destination": "/index.html"
     }
   ]

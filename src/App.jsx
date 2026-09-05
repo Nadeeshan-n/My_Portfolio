@@ -22,7 +22,7 @@ const navItems = [
   { id: 'contact', label: 'Contact', icon: <Mail size={18} /> },
 ];
 
-const App = () => {
+const App = ({ onNavigateToAdmin }) => {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -85,8 +85,28 @@ const App = () => {
           <a href="#" className="hover:text-white transition-colors">Resume</a>
           <a href="#" className="hover:text-white transition-colors">GitHub</a>
           <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+          {onNavigateToAdmin && (
+            <button
+              onClick={onNavigateToAdmin}
+              className="text-zinc-500 hover:text-indigo-400 transition-colors inline-flex items-center gap-1.5"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+              Admin CMS
+            </button>
+          )}
         </div>
       </footer>
+
+      {onNavigateToAdmin && (
+        <button
+          onClick={onNavigateToAdmin}
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white shadow-xl backdrop-blur-md transition-all hover:scale-105"
+          title="Open Admin CMS"
+        >
+          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+          Admin Console
+        </button>
+      )}
 
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"></div>

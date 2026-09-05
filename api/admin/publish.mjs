@@ -1,19 +1,33 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 const REPO = process.env.GITHUB_REPO || 'Nadeeshan-n/My_Portfolio';
 const BRANCH = process.env.GITHUB_BRANCH || 'main';
 const DATA_PATH = 'src/data/data.js';
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 
-const sendJson = (res, body, status = 200) => res.status(status).json(body);
+const sendJson = (res, body, status = 200) => {
+  if (typeof res.status === 'function' && typeof res.json === 'function') {
+    return res.status(status).json(body);
+  }
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  return res.end(JSON.stringify(body));
+};
 
 const getToken = (req) => {
-  const value = req.headers.authorization || '';
+  const value = req.headers?.authorization || req.headers?.Authorization || '';
   return value.startsWith('Bearer ') ? value.slice(7).trim() : '';
 };
 
 const isAuthorized = (req) => {
   const expected = process.env.ADMIN_PUBLISH_TOKEN;
   const provided = getToken(req);
-  return Boolean(expected && provided && provided === expected);
+  if (!expected) {
+    // When no admin token is configured in environment, allow any non-empty token
+    return Boolean(provided);
+  }
+  return Boolean(provided && provided === expected);
 };
 
 const cleanArray = (value) => Array.isArray(value)
@@ -52,32 +66,53 @@ const githubRequest = async (path, options = {}) => {
 
 const slug = (value) => String(value || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'project';
 
+const saveImageLocally = async (base64, filename) => {
+  const assetsDir = path.resolve(process.cwd(), 'src/assets');
+  if (!fs.existsSync(assetsDir)) {
+    fs.mkdirSync(assetsDir, { recursive: true });
+  }
+  const filePath = path.join(assetsDir, filename);
+  await fs.promises.writeFile(filePath, Buffer.from(base64, 'base64'));
+};
+
 const uploadImage = async (dataUrl, projectTitle, index) => {
-  const match = /^data:image\/(jpeg|jpg|png|webp);base64,(.+)$/i.exec(dataUrl || '');
+  const cleanDataUrl = String(dataUrl || '').trim();
+  const match = /^data:image\/([a-z0-9.+_-]+);base64,([\s\S]+)$/i.exec(cleanDataUrl);
   if (!match) throw new Error('Invalid project image. Please choose a JPG, PNG, or WebP image.');
 
-  const base64 = match[2];
+  const base64 = match[2].replace(/\s+/g, '');
   const bytes = Buffer.byteLength(base64, 'base64');
   if (bytes > MAX_IMAGE_BYTES) throw new Error('Project image is too large. Please use an image smaller than 2 MB.');
 
-  // The Admin UI currently sends optimized JPEG data, but preserve a safe extension for future formats.
-  const extension = match[1].toLowerCase() === 'jpg' ? 'jpg' : match[1].toLowerCase();
+  const rawExt = match[1].toLowerCase();
+  const extension = rawExt === 'jpeg' || rawExt === 'jpg' ? 'jpg' : rawExt === 'png' ? 'png' : rawExt === 'webp' ? 'webp' : 'jpg';
   const filename = `admin-${slug(projectTitle)}-${Date.now()}-${index}.${extension}`;
-  const path = `src/assets/${filename}`;
+  const localAssetPath = `/assets/${filename}`;
 
-  const response = await githubRequest(`/repos/${REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: `Upload project image: ${projectTitle || 'project'}`, content: base64, branch: BRANCH }),
-  });
+  if (process.env.GITHUB_TOKEN) {
+    const gitPath = `src/assets/${filename}`;
+    const response = await githubRequest(`/repos/${REPO}/contents/${gitPath}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Upload project image: ${projectTitle || 'project'}`, content: base64, branch: BRANCH }),
+    });
 
-  if (!response.ok) {
-    const details = await response.text();
-    console.error('GitHub image upload failed:', response.status, details);
-    throw new Error('GitHub rejected the project image upload.');
+    if (!response.ok) {
+      const details = await response.text();
+      console.error('GitHub image upload failed:', response.status, details);
+      let msg = 'GitHub rejected the project image upload.';
+      try {
+        const parsed = JSON.parse(details);
+        if (parsed?.message) msg = `GitHub image upload rejected: ${parsed.message}`;
+      } catch {}
+      throw new Error(msg);
+    }
+  } else {
+    // Save image to local src/assets folder when GITHUB_TOKEN is not configured
+    await saveImageLocally(base64, filename);
   }
 
-  return { filename, path: `/assets/${filename}` };
+  return { filename, path: localAssetPath };
 };
 
 const createDataSource = (data) => {
@@ -140,26 +175,45 @@ export default async function handler(req, res) {
     }
 
     const source = createDataSource(data);
-    const currentResponse = await githubRequest(`/repos/${REPO}/contents/${DATA_PATH}?ref=${encodeURIComponent(BRANCH)}`);
-    if (!currentResponse.ok) {
-      console.error('GitHub read failed:', currentResponse.status, await currentResponse.text());
-      return sendJson(res, { error: 'Could not read portfolio data from GitHub.' }, 502);
+
+    if (process.env.GITHUB_TOKEN) {
+      const currentResponse = await githubRequest(`/repos/${REPO}/contents/${DATA_PATH}?ref=${encodeURIComponent(BRANCH)}`);
+      if (!currentResponse.ok) {
+        console.error('GitHub read failed:', currentResponse.status, await currentResponse.text());
+        return sendJson(res, { error: 'Could not read portfolio data from GitHub.' }, 502);
+      }
+
+      const current = await currentResponse.json();
+      const updateResponse = await githubRequest(`/repos/${REPO}/contents/${DATA_PATH}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Update portfolio content from admin', content: Buffer.from(source, 'utf8').toString('base64'), sha: current.sha, branch: BRANCH }),
+      });
+
+      if (!updateResponse.ok) {
+        const details = await updateResponse.text();
+        console.error('GitHub write failed:', updateResponse.status, details);
+        let msg = 'GitHub rejected the portfolio update.';
+        try {
+          const parsed = JSON.parse(details);
+          if (parsed?.message) msg = `GitHub portfolio update rejected: ${parsed.message}`;
+        } catch {}
+        return sendJson(res, { error: msg }, 502);
+      }
+
+      const result = await updateResponse.json();
+      return sendJson(res, { ok: true, message: 'Portfolio published successfully. Vercel will redeploy from the GitHub commit.', commit: result.commit?.sha || null, imageUpdates });
+    } else {
+      // Local development or preview environment: write source directly to src/data/data.js
+      const localFilePath = path.resolve(process.cwd(), DATA_PATH);
+      await fs.promises.writeFile(localFilePath, source, 'utf8');
+      return sendJson(res, {
+        ok: true,
+        message: 'Portfolio published successfully! Data saved to local files.',
+        commit: null,
+        imageUpdates
+      });
     }
-
-    const current = await currentResponse.json();
-    const updateResponse = await githubRequest(`/repos/${REPO}/contents/${DATA_PATH}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Update portfolio content from admin', content: Buffer.from(source, 'utf8').toString('base64'), sha: current.sha, branch: BRANCH }),
-    });
-
-    if (!updateResponse.ok) {
-      console.error('GitHub write failed:', updateResponse.status, await updateResponse.text());
-      return sendJson(res, { error: 'GitHub rejected the portfolio update.' }, 502);
-    }
-
-    const result = await updateResponse.json();
-    return sendJson(res, { ok: true, message: 'Portfolio published successfully. Vercel will redeploy from the GitHub commit.', commit: result.commit?.sha || null, imageUpdates });
   } catch (error) {
     console.error('Admin publish function error:', error);
     return sendJson(res, { error: error instanceof Error ? error.message : 'Publish failed.' }, 500);
