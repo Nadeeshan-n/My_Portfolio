@@ -1,8 +1,8 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788622705549-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788622706700-4.png';
+import adminProjectImage3 from '../assets/admin-campusfind-1788624086763-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788624087917-4.png';
 
 export const projectList = [
   {
@@ -61,14 +61,14 @@ export const projectList = [
     image: adminProjectImage4,
   },
   {
-    title: "New Project",
-    desc: "",
-    fullDescription: "",
+    title: "Personal Task MCP Server",
+    desc: "Built a local Personal Task MCP Server to learn how Model Context Protocol connects AI applications with tools, resources, and task data.",
+    fullDescription: "This project was built as a hands-on learning project to understand the Model Context Protocol (MCP) from the ground up. I developed a local Python-based MCP server that provides task-management capabilities and connected it with custom MCP clients, Gemini, and a Google ADK agent.\n\nThe project demonstrates the complete flow from a natural-language user request to an AI model, MCP client, MCP server, MCP tool, local task data, and the returned result. The server exposes task-management tools such as add_task, list_tasks, complete_task, delete_task, and search_tasks.\n\nI also implemented MCP resources and prompts to understand the different capabilities provided by MCP. The project includes the tasks://all resource for accessing task data and a daily_task_review prompt for AI-assisted task review.\n\nThe project progressively explores MCP concepts through a basic client-server implementation, Gemini integration, and Google ADK integration using McpToolset. Local communication is handled using stdio, while tasks are stored in a simple JSON file to keep the focus on learning MCP rather than database engineering.\n\nThis project helped me understand how MCP can serve as a standardized integration layer between AI agents and external tools or systems.",
     contributionType: "Individual Project",
-    technologies: [],
-    keyFeatures: [],
+    technologies: ["Python","Model Context Protocol (MCP)","Gemini","Google ADK","McpToolset","JSON","stdio"],
+    keyFeatures: ["Local Python-based MCP server","MCP tool implementation","Task creation and management","Task search functionality","MCP resource implementation","MCP prompt implementation","Custom MCP client","Tool discovery and tool invocation","Gemini + MCP integration","Google ADK + MCP integration","stdio-based local communication","JSON-based local task storage"],
     link: "#",
-    githubLink: "",
+    githubLink: "https://github.com/Nadeeshan-n/Personal-Task-MCP-Server",
     image: "",
   },
 ];
