@@ -1,8 +1,8 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788545684937-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788545686276-4.png';
+import adminProjectImage3 from '../assets/admin-campusfind-1788622705549-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788622706700-4.png';
 
 export const projectList = [
   {
@@ -59,6 +59,17 @@ export const projectList = [
     link: "#",
     githubLink: "https://github.com/Nadeeshan-n/Drive-Smart-2.0-",
     image: adminProjectImage4,
+  },
+  {
+    title: "New Project",
+    desc: "",
+    fullDescription: "",
+    contributionType: "Individual Project",
+    technologies: [],
+    keyFeatures: [],
+    link: "#",
+    githubLink: "",
+    image: "",
   },
 ];
 
