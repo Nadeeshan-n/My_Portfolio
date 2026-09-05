@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788628747455-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788628748707-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788628749869-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788636801564-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788636802761-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788636803879-5.jpg';
 
 export const projectList = [
   {
@@ -88,7 +88,7 @@ export const educationList = [
     "institutionLink": "https://www.coursera.org/account/accomplishments/verify/Y4M0EXWL5LZS?utm_source=ln&utm_medium=certificate&utm_content=cert_image&utm_campaign=pdf_header_button&utm_product=course",
     "institution": "Completed: Hands-on Introduction to Linux Commands and Shell Scripting on Coursera.",
     "period": "2026",
-    "description": "Physical Science stream with a strong emphasis on Mathematics and Physics, providing a solid foundation for computational logic.",
+    "description": "",
     "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS/CERTIFICATE_LANDING_PAGE~Y4M0EXWL5LZS.jpeg"
   }
 ];
