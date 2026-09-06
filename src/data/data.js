@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788687849434-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788687850678-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788687851676-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788688047553-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788688048898-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788688049902-5.jpg';
 
 export const projectList = [
   {
@@ -121,7 +121,7 @@ export const educationList = [
     "institution": "University of Michigan",
     "period": "2026",
     "description": "Completed Python Data Structures from the University of Michigan. Developed practical skills in working with Python data structures, including lists, dictionaries, tuples, and file handling, while strengthening problem-solving and data-processing skills.\n\nShort version:",
-    "image": ""
+    "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN.jpeg"
   },
   {
     "degree": "Using Python to Access Web Data",
