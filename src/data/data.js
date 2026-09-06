@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788686068925-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788686070100-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788686071112-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788686268797-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788686269904-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788686270932-5.jpg';
 
 export const projectList = [
   {
@@ -97,7 +97,7 @@ export const educationList = [
     "institution": "https://www.coursera.org/learn/machine-learning-linear-algebra",
     "period": "2026",
     "description": "Completed Linear Algebra for Machine Learning and Data Science by DeepLearning.AI on Coursera. Developed a practical understanding of vectors, matrices, linear transformations, rank, linear independence, eigenvalues, eigenvectors, and core matrix operations used in machine learning and data science.",
-    "image": "https://www.coursera.org/account/accomplishments/certificate/XWE5UCP1UWBI"
+    "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~XWE5UCP1UWBI/CERTIFICATE_LANDING_PAGE~XWE5UCP1UWBI.jpeg"
   }
 ];
 
