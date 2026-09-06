@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788688269192-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788688270381-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788688271462-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788688492915-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788688494255-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788688495449-5.jpg';
 
 export const projectList = [
   {
@@ -125,7 +125,7 @@ export const educationList = [
   },
   {
     "degree": "Using Python to Access Web Data",
-    "institutionLink": "",
+    "institutionLink": "https://www.coursera.org/learn/python-network-data",
     "institution": "University of Michigan",
     "period": "2026",
     "description": "Completed Using Python to Access Web Data from the University of Michigan. Developed practical skills in retrieving and processing web data using Python, working with APIs, web services, JSON, XML, regular expressions, and network protocols.",
