@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788688047553-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788688048898-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788688049902-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788688269192-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788688270381-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788688271462-5.jpg';
 
 export const projectList = [
   {
@@ -127,7 +127,7 @@ export const educationList = [
     "degree": "Using Python to Access Web Data",
     "institutionLink": "",
     "institution": "University of Michigan",
-    "period": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN.jpeg",
+    "period": "2026",
     "description": "Completed Using Python to Access Web Data from the University of Michigan. Developed practical skills in retrieving and processing web data using Python, working with APIs, web services, JSON, XML, regular expressions, and network protocols.",
     "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~7HIOJ9AK4CIZ/CERTIFICATE_LANDING_PAGE~7HIOJ9AK4CIZ.jpeg"
   }
