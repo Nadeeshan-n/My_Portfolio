@@ -1,9 +1,9 @@
 import weatherImg from '../assets/weather.jpg';
 import driveSmartImg from '../assets/drive_smart.png';
 import aiAgentImg from '../assets/AI-Agent.jpg';
-import adminProjectImage3 from '../assets/admin-campusfind-1788686674927-3.png';
-import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788686676300-4.png';
-import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788686677786-5.jpg';
+import adminProjectImage3 from '../assets/admin-campusfind-1788687849434-3.png';
+import adminProjectImage4 from '../assets/admin-drive-smart-2-0-1788687850678-4.png';
+import adminProjectImage5 from '../assets/admin-personal-task-mcp-server-1788687851676-5.jpg';
 
 export const projectList = [
   {
@@ -106,6 +106,30 @@ export const educationList = [
     "period": "2024",
     "description": "Completed Programming Foundations with JavaScript, HTML and CSS from Duke University. Built a strong foundation in web development, including JavaScript programming, HTML/CSS, UI design, event-driven programming, and interactive web applications.",
     "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~5SJ9UFLEKLCP/CERTIFICATE_LANDING_PAGE~5SJ9UFLEKLCP.jpeg"
+  },
+  {
+    "degree": "Programming for Everybody (Getting Started with Python)",
+    "institutionLink": "https://www.coursera.org/learn/python",
+    "institution": "University of Michigan",
+    "period": "2026",
+    "description": "Completed Programming for Everybody (Getting Started with Python) from the University of Michigan. Developed a strong foundation in Python programming, including variables, functions, loops, and core programming concepts, with an emphasis on computational thinking and problem-solving.",
+    "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~O5JB4V6QFV7F/CERTIFICATE_LANDING_PAGE~O5JB4V6QFV7F.jpeg"
+  },
+  {
+    "degree": "Python Data Structures",
+    "institutionLink": "https://www.coursera.org/learn/python-data",
+    "institution": "University of Michigan",
+    "period": "2026",
+    "description": "Completed Python Data Structures from the University of Michigan. Developed practical skills in working with Python data structures, including lists, dictionaries, tuples, and file handling, while strengthening problem-solving and data-processing skills.\n\nShort version:",
+    "image": ""
+  },
+  {
+    "degree": "Using Python to Access Web Data",
+    "institutionLink": "",
+    "institution": "University of Michigan",
+    "period": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN/CERTIFICATE_LANDING_PAGE~2KI28ZW26UEN.jpeg",
+    "description": "Completed Using Python to Access Web Data from the University of Michigan. Developed practical skills in retrieving and processing web data using Python, working with APIs, web services, JSON, XML, regular expressions, and network protocols.",
+    "image": "https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~7HIOJ9AK4CIZ/CERTIFICATE_LANDING_PAGE~7HIOJ9AK4CIZ.jpeg"
   }
 ];
 
